@@ -4,5 +4,9 @@
       "source": "/((?!assets/).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "buildCommand": "ng build",
+  "outputDirectory": "dist/hirehub/browser",
+  "installCommand": "npm install",
+  "framework": null
 }
