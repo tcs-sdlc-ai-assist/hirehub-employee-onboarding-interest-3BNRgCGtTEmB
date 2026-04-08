@@ -1,0 +1,324 @@
+<div class="admin-page">
+  @if (!isAuthenticated) {
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>Admin Login</h2>
+          <p>Sign in to access the dashboard</p>
+        </div>
+
+        @if (errorMessage) {
+          <div class="error-banner">
+            <span class="error-icon">⚠</span>
+            <span>{{ errorMessage }}</span>
+          </div>
+        }
+
+        <form (ngSubmit)="onLogin()" class="login-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Enter username"
+              autocomplete="username"
+              [disabled]="isLoggingIn"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              [disabled]="isLoggingIn"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="login-button"
+            [disabled]="isLoggingIn || !username || !password"
+          >
+            @if (isLoggingIn) {
+              <span class="spinner"></span>
+              <span>Signing in...</span>
+            } @else {
+              <span>Sign In</span>
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  } @else {
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h1>Admin Dashboard</h1>
+        <button class="logout-button" (click)="onLogout()">Logout</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card total">
+          <div class="stat-icon">📋</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ summaryStats.total }}</span>
+            <span class="stat-label">Total Submissions</span>
+          </div>
+        </div>
+
+        <div class="stat-card engineering">
+          <div class="stat-icon">⚙️</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ summaryStats.engineering }}</span>
+            <span class="stat-label">Engineering</span>
+          </div>
+        </div>
+
+        <div class="stat-card marketing">
+          <div class="stat-icon">📢</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ summaryStats.marketing }}</span>
+            <span class="stat-label">Marketing</span>
+          </div>
+        </div>
+
+        <div class="stat-card sales">
+          <div class="stat-icon">💼</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ summaryStats.sales }}</span>
+            <span class="stat-label">Sales</span>
+          </div>
+        </div>
+
+        <div class="stat-card hr">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ summaryStats.hr }}</span>
+            <span class="stat-label">HR</span>
+          </div>
+        </div>
+
+        <div class="stat-card other">
+          <div class="stat-icon">📁</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ summaryStats.other }}</span>
+            <span class="stat-label">Other</span>
+          </div>
+        </div>
+      </div>
+
+      @if (dashboardError) {
+        <div class="error-banner dashboard-error">
+          <span class="error-icon">⚠</span>
+          <span>{{ dashboardError }}</span>
+          <button class="retry-button" (click)="loadSubmissions()">Retry</button>
+        </div>
+      }
+
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Candidate Submissions</h2>
+          <span class="submission-count">{{ submissions.length }} records</span>
+        </div>
+
+        @if (submissions.length === 0) {
+          <div class="empty-state">
+            <span class="empty-icon">📭</span>
+            <p>No submissions found.</p>
+          </div>
+        } @else {
+          <div class="table-responsive">
+            <table class="submissions-table">
+              <thead>
+                <tr>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Department</th>
+                  <th>Submitted At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (submission of submissions; track submission.id) {
+                  <tr>
+                    <td>{{ submission.fullName }}</td>
+                    <td>{{ submission.email }}</td>
+                    <td>{{ submission.mobile }}</td>
+                    <td>
+                      <span class="department-badge" [attr.data-department]="submission.department">
+                        {{ submission.department }}
+                      </span>
+                    </td>
+                    <td>{{ submission.submittedAt | date:'medium' }}</td>
+                    <td class="actions-cell">
+                      <button
+                        class="action-button edit-button"
+                        (click)="openEditModal(submission)"
+                        title="Edit submission"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        class="action-button delete-button"
+                        (click)="openDeleteDialog(submission)"
+                        title="Delete submission"
+                      >
+                        🗑️
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (showEditModal && editingSubmission) {
+      <div class="modal-overlay" (click)="onOverlayClick($event)">
+        <div class="modal-content edit-modal">
+          <div class="modal-header">
+            <h3>Edit Submission</h3>
+            <button class="close-button" (click)="closeEditModal()">✕</button>
+          </div>
+
+          @if (editError) {
+            <div class="error-banner modal-error">
+              <span class="error-icon">⚠</span>
+              <span>{{ editError }}</span>
+            </div>
+          }
+
+          <form (ngSubmit)="onSaveEdit()" class="edit-form">
+            <div class="form-group">
+              <label for="editFullName">Full Name</label>
+              <input
+                id="editFullName"
+                type="text"
+                [(ngModel)]="editingSubmission.fullName"
+                name="fullName"
+                placeholder="Full Name"
+                required
+              />
+              @if (editValidationErrors['fullName']) {
+                <span class="field-error">{{ editValidationErrors['fullName'] }}</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="editEmail">Email</label>
+              <input
+                id="editEmail"
+                type="email"
+                [(ngModel)]="editingSubmission.email"
+                name="email"
+                placeholder="Email"
+                required
+              />
+              @if (editValidationErrors['email']) {
+                <span class="field-error">{{ editValidationErrors['email'] }}</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="editMobile">Mobile</label>
+              <input
+                id="editMobile"
+                type="text"
+                [(ngModel)]="editingSubmission.mobile"
+                name="mobile"
+                placeholder="Mobile Number"
+                required
+              />
+              @if (editValidationErrors['mobile']) {
+                <span class="field-error">{{ editValidationErrors['mobile'] }}</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="editDepartment">Department</label>
+              <select
+                id="editDepartment"
+                [(ngModel)]="editingSubmission.department"
+                name="department"
+                required
+              >
+                <option value="" disabled>Select Department</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Sales">Sales</option>
+                <option value="HR">HR</option>
+                <option value="Other">Other</option>
+              </select>
+              @if (editValidationErrors['department']) {
+                <span class="field-error">{{ editValidationErrors['department'] }}</span>
+              }
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="cancel-button" (click)="closeEditModal()">Cancel</button>
+              <button type="submit" class="save-button" [disabled]="isSaving">
+                @if (isSaving) {
+                  <span class="spinner"></span>
+                  <span>Saving...</span>
+                } @else {
+                  <span>Save Changes</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    @if (showDeleteDialog && deletingSubmission) {
+      <div class="modal-overlay" (click)="onOverlayClick($event)">
+        <div class="modal-content delete-dialog">
+          <div class="modal-header">
+            <h3>Confirm Deletion</h3>
+            <button class="close-button" (click)="closeDeleteDialog()">✕</button>
+          </div>
+
+          @if (deleteError) {
+            <div class="error-banner modal-error">
+              <span class="error-icon">⚠</span>
+              <span>{{ deleteError }}</span>
+            </div>
+          }
+
+          <div class="delete-body">
+            <p>Are you sure you want to delete the submission for <strong>{{ deletingSubmission.fullName }}</strong>?</p>
+            <p class="delete-warning">This action cannot be undone.</p>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="cancel-button" (click)="closeDeleteDialog()">Cancel</button>
+            <button
+              type="button"
+              class="confirm-delete-button"
+              (click)="onConfirmDelete()"
+              [disabled]="isDeleting"
+            >
+              @if (isDeleting) {
+                <span class="spinner"></span>
+                <span>Deleting...</span>
+              } @else {
+                <span>Delete</span>
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

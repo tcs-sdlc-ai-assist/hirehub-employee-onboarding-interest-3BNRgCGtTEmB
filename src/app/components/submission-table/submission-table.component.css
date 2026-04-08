@@ -1,0 +1,394 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 140px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #4f46e5;
+}
+
+.stat-card h4 {
+  margin: 0 0 4px 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.submissions-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.submissions-table thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.submissions-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.submissions-table td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.submissions-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.submissions-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.submissions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.department-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.department-badge.engineering {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.department-badge.marketing {
+  background-color: #fce7f3;
+  color: #9d174d;
+}
+
+.department-badge.sales {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.department-badge.hr {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.department-badge.finance {
+  background-color: #ede9fe;
+  color: #5b21b6;
+}
+
+.department-badge.operations {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+.department-badge.design {
+  background-color: #cffafe;
+  color: #155e75;
+}
+
+.department-badge.default {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-action:active {
+  transform: scale(0.96);
+}
+
+.btn-edit {
+  background-color: #eef2ff;
+  color: #4f46e5;
+}
+
+.btn-edit:hover {
+  background-color: #e0e7ff;
+}
+
+.btn-delete {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.btn-delete:hover {
+  background-color: #fee2e2;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: #9ca3af;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.empty-state .empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.warning-banner {
+  background-color: #fffbeb;
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #92400e;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.filter-select {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  min-width: 160px;
+  transition: border-color 0.2s ease;
+}
+
+.filter-select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm-dialog {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.confirm-dialog h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #1f2937;
+}
+
+.confirm-dialog p {
+  margin: 0 0 20px 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-cancel {
+  padding: 8px 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #f9fafb;
+}
+
+.btn-confirm-delete {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-confirm-delete:hover {
+  background-color: #b91c1c;
+}
+
+@media (max-width: 768px) {
+  .summary-stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stat-card {
+    min-width: unset;
+  }
+
+  .search-filter-bar {
+    flex-direction: column;
+  }
+
+  .search-input,
+  .filter-select {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .table-container {
+    border-radius: 0;
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px);
+  }
+
+  .submissions-table th,
+  .submissions-table td {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+
+  .btn-action {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+
+  .actions-cell {
+    gap: 6px;
+  }
+
+  .confirm-dialog {
+    width: 95%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .submissions-table {
+    min-width: 600px;
+  }
+
+  .stat-card p {
+    font-size: 1.25rem;
+  }
+
+  .stat-card h4 {
+    font-size: 0.75rem;
+  }
+
+  .empty-state {
+    padding: 32px 16px;
+  }
+}

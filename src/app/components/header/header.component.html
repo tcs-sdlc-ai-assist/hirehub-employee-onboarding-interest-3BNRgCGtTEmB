@@ -1,0 +1,64 @@
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a routerLink="/" class="logo-link">
+        <span class="logo-text">HireHub</span>
+      </a>
+      <button
+        class="hamburger"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+    <div class="navbar-menu" [class.is-open]="isMobileMenuOpen">
+      <ul class="nav-links">
+        <li>
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/interest-form"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Apply
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/admin"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Admin
+          </a>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        @if (isAdminLoggedIn) {
+          <button class="btn btn-logout" (click)="onLogout()">Logout</button>
+        } @else {
+          <a
+            routerLink="/admin"
+            class="btn btn-login"
+            (click)="closeMobileMenu()"
+          >
+            Login
+          </a>
+        }
+      </div>
+    </div>
+  </nav>
+</header>

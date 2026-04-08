@@ -1,0 +1,122 @@
+<div class="form-page">
+  <div class="form-card">
+    <h2 class="form-title">Express Your Interest</h2>
+    <p class="form-subtitle">Fill out the form below to join HireHub's onboarding program.</p>
+
+    @if (successMessage) {
+      <div class="banner banner-success">
+        <span class="banner-icon">✓</span>
+        <span>{{ successMessage }}</span>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="banner banner-error">
+        <span class="banner-icon">✕</span>
+        <span>{{ errorMessage }}</span>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input
+          id="fullName"
+          type="text"
+          class="form-input"
+          formControlName="fullName"
+          placeholder="Enter your full name"
+          [class.input-error]="form.get('fullName')?.invalid && form.get('fullName')?.touched"
+        />
+        @if (form.get('fullName')?.touched && form.get('fullName')?.invalid) {
+          <div class="field-error">
+            @if (form.get('fullName')?.hasError('required')) {
+              <span>Full Name is required.</span>
+            } @else if (form.get('fullName')?.hasError('minlength')) {
+              <span>Full Name must be at least 2 characters.</span>
+            } @else if (form.get('fullName')?.hasError('maxlength')) {
+              <span>Full Name must not exceed 50 characters.</span>
+            } @else if (form.get('fullName')?.hasError('pattern')) {
+              <span>Full Name must contain only letters and spaces.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-input"
+          formControlName="email"
+          placeholder="Enter your email address"
+          [class.input-error]="form.get('email')?.invalid && form.get('email')?.touched"
+        />
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <div class="field-error">
+            @if (form.get('email')?.hasError('required')) {
+              <span>Email is required.</span>
+            } @else if (form.get('email')?.hasError('email')) {
+              <span>Please enter a valid email address.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="mobile" class="form-label">Mobile Number</label>
+        <input
+          id="mobile"
+          type="tel"
+          class="form-input"
+          formControlName="mobile"
+          placeholder="Enter your mobile number"
+          [class.input-error]="form.get('mobile')?.invalid && form.get('mobile')?.touched"
+        />
+        @if (form.get('mobile')?.touched && form.get('mobile')?.invalid) {
+          <div class="field-error">
+            @if (form.get('mobile')?.hasError('required')) {
+              <span>Mobile number is required.</span>
+            } @else if (form.get('mobile')?.hasError('pattern')) {
+              <span>Mobile number must contain only digits (10-15 characters).</span>
+            } @else if (form.get('mobile')?.hasError('minlength')) {
+              <span>Mobile number must be at least 10 digits.</span>
+            } @else if (form.get('mobile')?.hasError('maxlength')) {
+              <span>Mobile number must not exceed 15 digits.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="department" class="form-label">Department</label>
+        <select
+          id="department"
+          class="form-input form-select"
+          formControlName="department"
+          [class.input-error]="form.get('department')?.invalid && form.get('department')?.touched"
+        >
+          <option value="" disabled>Select a department</option>
+          @for (dept of departments; track dept) {
+            <option [value]="dept">{{ dept }}</option>
+          }
+        </select>
+        @if (form.get('department')?.touched && form.get('department')?.invalid) {
+          <div class="field-error">
+            @if (form.get('department')?.hasError('required')) {
+              <span>Department is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          Submit Interest
+        </button>
+        <a routerLink="/" class="btn btn-secondary">Back to Home</a>
+      </div>
+    </form>
+  </div>
+</div>

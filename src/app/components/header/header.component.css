@@ -1,0 +1,238 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  background-color: #1e293b;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.header-logo span {
+  color: #38bdf8;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links a.active {
+  color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-label {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.btn-login,
+.btn-logout {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-login {
+  background-color: #38bdf8;
+  color: #0f172a;
+}
+
+.btn-login:hover {
+  background-color: #7dd3fc;
+}
+
+.btn-login:active {
+  transform: scale(0.97);
+}
+
+.btn-logout {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.btn-logout:hover {
+  background-color: #f87171;
+}
+
+.btn-logout:active {
+  transform: scale(0.97);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1100;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 1rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-container {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1e293b;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1050;
+    overflow-y: auto;
+  }
+
+  .nav-container.open {
+    transform: translateX(0);
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .header-actions {
+    flex-direction: column;
+    margin-top: 1.5rem;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .btn-login,
+  .btn-logout {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .admin-label {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0 0.75rem;
+    height: 56px;
+  }
+
+  .header-logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-container {
+    top: 56px;
+  }
+}

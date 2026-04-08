@@ -1,0 +1,98 @@
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>Edit Submission</h2>
+      <button class="close-btn" type="button" (click)="close()" aria-label="Close modal">&times;</button>
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          type="text"
+          formControlName="fullName"
+          placeholder="Enter full name"
+          [class.input-error]="editForm.get('fullName')?.invalid && editForm.get('fullName')?.touched"
+        />
+        @if (editForm.get('fullName')?.invalid && editForm.get('fullName')?.touched) {
+          <div class="error-message">
+            @if (editForm.get('fullName')?.errors?.['required']) {
+              <span>Full Name is required.</span>
+            }
+            @if (editForm.get('fullName')?.errors?.['minlength']) {
+              <span>Full Name must be at least 2 characters.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter email address"
+          [class.input-error]="editForm.get('email')?.invalid && editForm.get('email')?.touched"
+        />
+        @if (editForm.get('email')?.invalid && editForm.get('email')?.touched) {
+          <div class="error-message">
+            @if (editForm.get('email')?.errors?.['required']) {
+              <span>Email is required.</span>
+            }
+            @if (editForm.get('email')?.errors?.['email']) {
+              <span>Please enter a valid email address.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="mobile">Mobile</label>
+        <input
+          id="mobile"
+          type="text"
+          formControlName="mobile"
+          placeholder="Enter mobile number"
+          [class.input-error]="editForm.get('mobile')?.invalid && editForm.get('mobile')?.touched"
+        />
+        @if (editForm.get('mobile')?.invalid && editForm.get('mobile')?.touched) {
+          <div class="error-message">
+            @if (editForm.get('mobile')?.errors?.['required']) {
+              <span>Mobile number is required.</span>
+            }
+            @if (editForm.get('mobile')?.errors?.['pattern']) {
+              <span>Mobile number must be 10 to 15 digits.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="department">Department</label>
+        <select
+          id="department"
+          formControlName="department"
+          [class.input-error]="editForm.get('department')?.invalid && editForm.get('department')?.touched"
+        >
+          <option value="" disabled>Select a department</option>
+          @for (dept of departments; track dept) {
+            <option [value]="dept">{{ dept }}</option>
+          }
+        </select>
+        @if (editForm.get('department')?.invalid && editForm.get('department')?.touched) {
+          <div class="error-message">
+            @if (editForm.get('department')?.errors?.['required']) {
+              <span>Department is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-cancel" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-save" [disabled]="editForm.invalid">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

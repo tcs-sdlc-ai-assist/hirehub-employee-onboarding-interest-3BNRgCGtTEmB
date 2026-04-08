@@ -1,0 +1,53 @@
+<div class="submission-table-container">
+  @if (submissions.length === 0) {
+    <div class="empty-state">
+      <p>No submissions found.</p>
+    </div>
+  } @else {
+    <div class="table-summary">
+      <span class="summary-badge">Total: {{ submissions.length }}</span>
+      <span class="summary-badge" *ngFor="let dept of departmentCounts">
+        {{ dept.department }}: {{ dept.count }}
+      </span>
+    </div>
+    <div class="table-wrapper">
+      <table class="submissions-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Department</th>
+            <th>Submitted At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (submission of submissions; track submission.id; let i = $index) {
+            <tr>
+              <td data-label="#">{{ i + 1 }}</td>
+              <td data-label="Full Name">{{ submission.fullName }}</td>
+              <td data-label="Email">{{ submission.email }}</td>
+              <td data-label="Mobile">{{ submission.mobile }}</td>
+              <td data-label="Department">
+                <span class="department-badge" [ngClass]="'dept-' + submission.department.toLowerCase().replace(' ', '-')">
+                  {{ submission.department }}
+                </span>
+              </td>
+              <td data-label="Submitted At">{{ submission.submittedAt | date:'medium' }}</td>
+              <td data-label="Actions" class="actions-cell">
+                <button class="btn btn-edit" (click)="onEdit(submission)" title="Edit submission">
+                  Edit
+                </button>
+                <button class="btn btn-delete" (click)="onDelete(submission.id)" title="Delete submission">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
